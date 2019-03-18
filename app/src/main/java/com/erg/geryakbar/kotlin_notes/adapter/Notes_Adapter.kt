@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.erg.geryakbar.kotlin_notes.R
 import com.erg.geryakbar.kotlin_notes.data.DataNotes
 import kotlinx.android.synthetic.main.list_notes.view.*
@@ -36,6 +37,7 @@ class Notes_Adapter : RecyclerView.Adapter<Notes_Adapter.ViewHolder>{
         holder.title.text = listnote.title
         holder.note.text = listnote.note
         holder.date.text = listnote.date
+
     }
 
 
@@ -46,8 +48,12 @@ class Notes_Adapter : RecyclerView.Adapter<Notes_Adapter.ViewHolder>{
         var date = itemView.txt__Date
         var note = itemView.txt_Note
 
-        override fun onClick(v: View?) {
+        init {
+            itemView.setOnClickListener(this)
+        }
 
+        override fun onClick(v: View?) {
+            Toast.makeText(itemView.context,itemView.txt_Id.text.toString(),Toast.LENGTH_SHORT).show()
         }
 
     }
