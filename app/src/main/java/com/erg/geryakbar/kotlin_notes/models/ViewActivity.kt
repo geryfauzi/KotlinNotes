@@ -24,10 +24,13 @@ class ViewActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        //
         mydb= DataHelper(this)
         id= intent.getStringExtra("id")
+        //
         btn_View_Update.setOnClickListener(this)
         btn_View_Delete.setOnClickListener(this)
+        //
         readData()
     }
 
@@ -63,8 +66,6 @@ class ViewActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(intent)
         } else Toast.makeText(applicationContext,"Update Failed!",Toast.LENGTH_SHORT).show()
 
-
-
     }
 
     fun deleteNote(){
@@ -82,4 +83,5 @@ class ViewActivity : AppCompatActivity(), View.OnClickListener {
             update()
         }else deleteNote()
     }
+
 }

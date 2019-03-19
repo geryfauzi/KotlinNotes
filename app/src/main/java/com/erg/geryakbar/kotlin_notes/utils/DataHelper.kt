@@ -60,6 +60,12 @@ class DataHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, D
         return true
     }
 
+    fun searchNote(query :String): Cursor{
+        val db = this.writableDatabase
+        val res : Cursor = db.rawQuery("SELECT * FROM "+ TABLE_NAME+" WHERE title like'%"+query+"%' OR note like'%"+query+"%'",null)
+        return res
+    }
+
     companion object {
         private val DB_NAME="Notes.db"
         private val DB_VERSION=1
