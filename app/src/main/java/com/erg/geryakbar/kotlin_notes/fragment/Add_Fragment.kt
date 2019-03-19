@@ -40,7 +40,7 @@ class Add_Fragment : Fragment(), View.OnClickListener {
             return
         }
 
-        val sdf = SimpleDateFormat("dd/MMMM/yyyy")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val date : String = sdf.format(Date())
 
         var isInserted : Boolean = mydb.addNote(title,note,date)

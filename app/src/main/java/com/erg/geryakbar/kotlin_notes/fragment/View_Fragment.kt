@@ -40,7 +40,7 @@ class View_Fragment : Fragment() {
             }
             while (res.moveToNext()){
                 var dataNotes : DataNotes = DataNotes(res.getInt(0),res.getString(1)
-                    ,res.getString(2),res.getString(3))
+                    ,res.getString(2),res.getString(3).substring(0,10))
                     listdata.add(dataNotes)
 
             }

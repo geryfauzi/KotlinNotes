@@ -10,7 +10,7 @@ class DataHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     override fun onCreate(db: SQLiteDatabase?) {
         val CREATE_TABLE ="CREATE TABLE IF NOT EXISTS $TABLE_NAME (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, note TEXT," +
-                " date TEXT)"
+                " date DATETIME)"
         db?.execSQL(CREATE_TABLE)
     }
 
@@ -33,8 +33,25 @@ class DataHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, D
 
     fun readAllNote() : Cursor{
         val db = this.writableDatabase
-        val res : Cursor = db.rawQuery("SELECT * FROM "+ TABLE_NAME + " ORDER BY id DESC", null)
+        val res : Cursor = db.rawQuery("SELECT * FROM "+ TABLE_NAME + " ORDER BY date DESC", null)
         return res
+
+    }
+
+    fun readOneNote(id : String): Cursor{
+        val db = this.writableDatabase
+        val res : Cursor = db.rawQuery("SELECT * FROM "+ TABLE_NAME + " WHERE id = '"+id+"'", null)
+        return res
+    }
+
+    fun updateNote (id: String, title: String, note: String, date: String): Boolean{
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put("title",title)
+        contentValues.put("note",note)
+        contentValues.put("date",date)
+        db.update(TABLE_NAME, contentValues," WHERE id ='"+id+"'",null)
+        return true
 
     }
 
