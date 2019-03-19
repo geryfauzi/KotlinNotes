@@ -50,9 +50,14 @@ class DataHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, D
         contentValues.put("title",title)
         contentValues.put("note",note)
         contentValues.put("date",date)
-        db.update(TABLE_NAME, contentValues," WHERE id ='"+id+"'",null)
+        db.update(TABLE_NAME, contentValues," id ='"+id+"'",null)
         return true
+    }
 
+    fun deleteNote(id: String):Boolean{
+        val db = this.writableDatabase
+        db.delete(TABLE_NAME," id ='"+id+"'",null)
+        return true
     }
 
     companion object {

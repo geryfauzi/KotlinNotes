@@ -7,4 +7,5 @@
     <string name="notes">Type a note...</string>
     <string name="savenote">Save Note</string>
     <string name="updatenote">Update Note</string>
+    <string name="deletenote">Delete Note</string>
 </resources>

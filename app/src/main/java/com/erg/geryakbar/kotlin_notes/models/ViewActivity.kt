@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import com.erg.geryakbar.kotlin_notes.R
 import com.erg.geryakbar.kotlin_notes.utils.DataHelper
@@ -22,9 +23,11 @@ class ViewActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         mydb= DataHelper(this)
         id= intent.getStringExtra("id")
         btn_View_Update.setOnClickListener(this)
+        btn_View_Delete.setOnClickListener(this)
         readData()
     }
 
@@ -33,8 +36,6 @@ class ViewActivity : AppCompatActivity(), View.OnClickListener {
         while(res.moveToNext()){
             et_View_Title.setText(res.getString(1))
             et_View_Notes.setText(res.getString(2))
-
-
         }
     }
 
@@ -57,15 +58,28 @@ class ViewActivity : AppCompatActivity(), View.OnClickListener {
         var isUpdated : Boolean = mydb.updateNote(id, title, note, date)
         if(isUpdated){
             Toast.makeText(applicationContext,"Update Successfully!",Toast.LENGTH_SHORT).show()
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
         } else Toast.makeText(applicationContext,"Update Failed!",Toast.LENGTH_SHORT).show()
 
-        val intent = Intent(applicationContext, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
+
 
     }
 
+    fun deleteNote(){
+        var isDeleted:Boolean=mydb.deleteNote(id)
+        if(isDeleted){
+            Toast.makeText(applicationContext,"Successfully deleted!",Toast.LENGTH_SHORT).show()
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+        } else Toast.makeText(applicationContext,"Delete Failed!",Toast.LENGTH_SHORT).show()
+    }
+
     override fun onClick(v: View?) {
-        update()
+        if(v == btn_View_Update){
+            update()
+        }else deleteNote()
     }
 }
